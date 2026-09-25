@@ -1,0 +1,15 @@
+/* TEAM */
+  Company: Keykraft (Keykraft Revenue Group)
+  Tagline: Your partner in growth.
+  Contact: info@keykraftt.com
+  Location: Lahore, Pakistan / Austin, Texas, USA
+  Site: https://keykraftt.com/
+
+/* SERVICES */
+  Web development, medical billing & revenue cycle management, social media marketing
+
+/* SITE */
+  Last update: 2026-08-06
+  Language: English
+  Standards: HTML5, CSS3, JavaScript, schema.org JSON-LD
+  Components: Responsive design, Core Web Vitals optimised
