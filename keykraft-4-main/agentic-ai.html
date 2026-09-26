@@ -102,14 +102,187 @@
   </div>
 </section>
 
-<section class="aix-section aix-process">
+<section class="aix-section aix-workflow-section" aria-labelledby="aix-workflow-title">
   <div class="aix-container">
-    <div class="aix-section-head reveal-r"><div><p class="aix-kicker"><span></span> From opportunity to production</p><h2>Build the right agent.<br><em>Prove it safely.</em></h2></div><p>We start with the work, define measurable success and increase autonomy only when the evidence supports it.</p></div>
-    <div class="aix-process-track">
-      <article class="reveal-r"><span>01</span><b>Discover</b><h3>Find the right workflow</h3><p>Map inputs, decisions, tools, risk and the business outcome.</p></article>
-      <article class="reveal-r"><span>02</span><b>Design</b><h3>Define the agent system</h3><p>Shape the role, knowledge, tools, permissions and review path.</p></article>
-      <article class="reveal-r"><span>03</span><b>Build</b><h3>Connect and evaluate</h3><p>Develop the workflow, integrate systems and test real scenarios.</p></article>
-      <article class="reveal-r"><span>04</span><b>Scale</b><h3>Operate and improve</h3><p>Monitor production behavior, cost, quality and business value.</p></article>
+    <div class="aix-workflow-head">
+      <div>
+        <p class="aix-kicker"><span></span> The agent execution graph</p>
+        <h2 id="aix-workflow-title">From trigger to <em>trusted action.</em></h2>
+      </div>
+      <p>See how a production-ready agent receives context, reasons with its tools and routes each outcome through a controlled workflow.</p>
+    </div>
+    <div class="aix-workflow-shell reveal-r" data-workflow-model>
+      <div class="aix-workflow-toolbar">
+        <div class="aix-workflow-toolbar-title"><span class="aix-workflow-live-dot"></span><strong>Agent workflow</strong><span>EXECUTION GRAPH</span></div>
+        <div class="aix-workflow-toolbar-meta"><span class="aix-workflow-run-status">● RUNNING</span><span>LIVE TRACE</span></div>
+      </div>
+      <div class="aix-workflow-canvas">
+        <div class="aix-workflow-grid" aria-hidden="true"></div>
+        <svg class="aix-workflow-svg" viewBox="0 0 1000 540" role="img" aria-labelledby="aix-workflow-svg-title aix-workflow-svg-desc" preserveAspectRatio="xMidYMid meet">
+          <title id="aix-workflow-svg-title">Animated AI agent workflow</title>
+          <desc id="aix-workflow-svg-desc">A form submission enters an AI agent, which uses a chat model, memory, tools and knowledge before routing the result to one of two actions.</desc>
+          <defs>
+            <linearGradient id="aix-flow-gradient" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#58dcff" />
+              <stop offset="0.55" stop-color="#6d88ff" />
+              <stop offset="1" stop-color="#37e2b5" />
+            </linearGradient>
+            <linearGradient id="aix-flow-green" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#4fd8a7" />
+              <stop offset="1" stop-color="#8effc9" />
+            </linearGradient>
+            <filter id="aix-flow-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+            <marker id="aix-flow-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M0 0 8 4 0 8Z" fill="#617789" />
+            </marker>
+            <marker id="aix-flow-arrow-green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M0 0 8 4 0 8Z" fill="#71f0ba" />
+            </marker>
+          </defs>
+
+          <g class="aix-workflow-links" aria-hidden="true">
+            <path class="aix-flow-base" data-flow-link="trigger-agent" d="M136 250 C176 250 202 250 245 250" marker-end="url(#aix-flow-arrow)" />
+            <path class="aix-flow-active" data-flow-link="trigger-agent" d="M136 250 C176 250 202 250 245 250" marker-end="url(#aix-flow-arrow-green)" />
+            <path class="aix-flow-base" data-flow-link="agent-decision" d="M465 250 C510 250 535 250 575 250" marker-end="url(#aix-flow-arrow)" />
+            <path class="aix-flow-active" data-flow-link="agent-decision" d="M465 250 C510 250 535 250 575 250" marker-end="url(#aix-flow-arrow-green)" />
+            <path class="aix-flow-base" data-flow-link="decision-success" d="M695 225 C750 174 775 142 818 142" marker-end="url(#aix-flow-arrow)" />
+            <path class="aix-flow-active" data-flow-link="decision-success" d="M695 225 C750 174 775 142 818 142" marker-end="url(#aix-flow-arrow-green)" />
+            <path class="aix-flow-base" data-flow-link="decision-fallback" d="M695 275 C750 326 775 358 818 358" marker-end="url(#aix-flow-arrow)" />
+            <path class="aix-flow-active" data-flow-link="decision-fallback" d="M695 275 C750 326 775 358 818 358" marker-end="url(#aix-flow-arrow-green)" />
+
+            <path class="aix-flow-aux-base" data-flow-link="agent-model" d="M330 320 C306 356 278 374 265 407" />
+            <path class="aix-flow-aux-active" data-flow-link="agent-model" d="M330 320 C306 356 278 374 265 407" />
+            <path class="aix-flow-aux-base" data-flow-link="agent-memory" d="M375 320 C380 355 386 379 395 407" />
+            <path class="aix-flow-aux-active" data-flow-link="agent-memory" d="M375 320 C380 355 386 379 395 407" />
+            <path class="aix-flow-aux-base" data-flow-link="agent-tools" d="M420 320 C454 355 490 379 525 407" />
+            <path class="aix-flow-aux-active" data-flow-link="agent-tools" d="M420 320 C454 355 490 379 525 407" />
+            <path class="aix-flow-aux-base" data-flow-link="agent-knowledge" d="M448 310 C510 350 590 377 655 407" />
+            <path class="aix-flow-aux-active" data-flow-link="agent-knowledge" d="M448 310 C510 350 590 377 655 407" />
+          </g>
+
+          <g class="aix-workflow-node" data-flow-node="trigger" tabindex="0">
+            <title>Trigger: form submission</title>
+            <rect x="30" y="195" width="106" height="110" rx="12" />
+            <circle class="aix-node-icon-bg" cx="58" cy="229" r="16" />
+            <path class="aix-node-icon" d="M51 224h14v11H51zM54 221h8M54 239h8" />
+            <text class="aix-node-index" x="83" y="226">01</text>
+            <text class="aix-node-title" x="48" y="270">Form</text>
+            <text class="aix-node-subtitle" x="48" y="287">submission</text>
+            <circle class="aix-node-port" cx="136" cy="250" r="5" />
+          </g>
+
+          <g class="aix-workflow-node aix-workflow-node-agent" data-flow-node="agent" tabindex="0">
+            <title>AI agent: reason and act</title>
+            <rect x="245" y="180" width="220" height="140" rx="14" />
+            <circle class="aix-node-icon-bg" cx="278" cy="223" r="18" />
+            <path class="aix-node-icon" d="M270 217h16v13h-16zM274 213v4M282 213v4M267 222h-4M289 222h4M274 233v4M282 233v4" />
+            <text class="aix-node-index" x="306" y="220">02 / CORE</text>
+            <text class="aix-node-title" x="306" y="245">AI Agent</text>
+            <text class="aix-node-subtitle" x="306" y="264">Reason · choose · act</text>
+            <line class="aix-node-divider" x1="263" y1="282" x2="447" y2="282" />
+            <text class="aix-node-meta" x="263" y="300">TOOLS AGENT</text>
+            <circle class="aix-node-port" cx="245" cy="250" r="5" />
+            <circle class="aix-node-port" cx="465" cy="250" r="5" />
+            <circle class="aix-node-port aix-node-port-bottom" cx="330" cy="320" r="4" />
+            <circle class="aix-node-port aix-node-port-bottom" cx="375" cy="320" r="4" />
+            <circle class="aix-node-port aix-node-port-bottom" cx="420" cy="320" r="4" />
+            <circle class="aix-node-port aix-node-port-bottom" cx="448" cy="310" r="4" />
+          </g>
+
+          <g class="aix-workflow-node" data-flow-node="decision" tabindex="0">
+            <title>Decision: route the result</title>
+            <rect x="575" y="195" width="120" height="110" rx="12" />
+            <circle class="aix-node-icon-bg" cx="606" cy="229" r="16" />
+            <path class="aix-node-icon" d="M599 229h14M606 222v14M602 225l4-4 4 4M602 233l4 4 4-4" />
+            <text class="aix-node-index" x="630" y="226">03</text>
+            <text class="aix-node-title" x="596" y="270">Route</text>
+            <text class="aix-node-subtitle" x="596" y="287">decision</text>
+            <circle class="aix-node-port" cx="575" cy="250" r="5" />
+            <circle class="aix-node-port aix-node-port-true" cx="695" cy="225" r="5" />
+            <circle class="aix-node-port aix-node-port-false" cx="695" cy="275" r="5" />
+            <text class="aix-node-branch aix-node-branch-true" x="706" y="219">TRUE</text>
+            <text class="aix-node-branch aix-node-branch-false" x="706" y="282">FALSE</text>
+          </g>
+
+          <g class="aix-workflow-node" data-flow-node="success" tabindex="0">
+            <title>Success action: add to channel</title>
+            <rect x="818" y="92" width="145" height="100" rx="12" />
+            <circle class="aix-node-icon-bg" cx="849" cy="127" r="16" />
+            <path class="aix-node-icon aix-node-icon-slack" d="M844 118h5v9h-5zM841 121h9v5h-9zM850 130h5v9h-5zM847 133h9v5h-9z" />
+            <text class="aix-node-index" x="873" y="124">04 / TRUE</text>
+            <text class="aix-node-title" x="839" y="158">Add to</text>
+            <text class="aix-node-subtitle" x="839" y="175">channel</text>
+            <circle class="aix-node-port" cx="818" cy="142" r="5" />
+          </g>
+
+          <g class="aix-workflow-node" data-flow-node="fallback" tabindex="0">
+            <title>Fallback action: update profile</title>
+            <rect x="818" y="308" width="145" height="100" rx="12" />
+            <circle class="aix-node-icon-bg" cx="849" cy="343" r="16" />
+            <path class="aix-node-icon" d="M842 343h14M849 336v14M845 339l4-4 4 4M845 347l4 4 4-4" />
+            <text class="aix-node-index" x="873" y="340">05 / FALSE</text>
+            <text class="aix-node-title" x="839" y="374">Update</text>
+            <text class="aix-node-subtitle" x="839" y="391">profile</text>
+            <circle class="aix-node-port" cx="818" cy="358" r="5" />
+          </g>
+
+          <g class="aix-workflow-node aix-workflow-resource" data-flow-node="model" tabindex="0">
+            <title>Connected resource: chat model</title>
+            <circle cx="265" cy="420" r="38" />
+            <circle class="aix-resource-core" cx="265" cy="420" r="24" />
+            <text class="aix-resource-glyph" x="265" y="425" text-anchor="middle">AI</text>
+            <text class="aix-resource-label" x="265" y="482" text-anchor="middle">Chat model</text>
+            <text class="aix-resource-subtitle" x="265" y="498" text-anchor="middle">Reasoning layer</text>
+          </g>
+          <g class="aix-workflow-node aix-workflow-resource" data-flow-node="memory" tabindex="0">
+            <title>Connected resource: memory</title>
+            <circle cx="395" cy="420" r="38" />
+            <circle class="aix-resource-core" cx="395" cy="420" r="24" />
+            <path class="aix-node-icon" d="M387 415h16v12h-16zM390 411v4M400 411v4M384 420h-4M404 420h4" />
+            <text class="aix-resource-label" x="395" y="482" text-anchor="middle">Memory</text>
+            <text class="aix-resource-subtitle" x="395" y="498" text-anchor="middle">Conversation state</text>
+          </g>
+          <g class="aix-workflow-node aix-workflow-resource" data-flow-node="tools" tabindex="0">
+            <title>Connected resource: tools</title>
+            <circle cx="525" cy="420" r="38" />
+            <circle class="aix-resource-core" cx="525" cy="420" r="24" />
+            <path class="aix-node-icon" d="M515 413h20v14h-20zM519 417h12M519 421h8M519 425h10" />
+            <text class="aix-resource-label" x="525" y="482" text-anchor="middle">Tools</text>
+            <text class="aix-resource-subtitle" x="525" y="498" text-anchor="middle">Business systems</text>
+          </g>
+          <g class="aix-workflow-node aix-workflow-resource" data-flow-node="knowledge" tabindex="0">
+            <title>Connected resource: knowledge</title>
+            <circle cx="655" cy="420" r="38" />
+            <circle class="aix-resource-core" cx="655" cy="420" r="24" />
+            <path class="aix-node-icon" d="M646 412h18v16h-18zM650 416h10M650 420h10M650 424h6" />
+            <text class="aix-resource-label" x="655" y="482" text-anchor="middle">Knowledge</text>
+            <text class="aix-resource-subtitle" x="655" y="498" text-anchor="middle">Grounded context</text>
+          </g>
+        </svg>
+        <div class="aix-workflow-mobile" aria-label="Mobile AI agent workflow">
+          <div class="aix-mobile-row">
+            <article class="aix-mobile-node" data-flow-node="trigger"><span class="aix-mobile-node-top"><b>01</b><i>TRIGGER</i></span><strong>Form submission</strong><small>New request received</small></article>
+            <span class="aix-mobile-flow" data-flow-link="trigger-agent"><i></i></span>
+            <article class="aix-mobile-node" data-flow-node="agent"><span class="aix-mobile-node-top"><b>02 / CORE</b><i>RUNNING</i></span><strong>AI Agent</strong><small>Reason · choose · act</small></article>
+          </div>
+          <span class="aix-mobile-flow aix-mobile-flow-vertical" data-flow-link="agent-decision"><i></i></span>
+          <article class="aix-mobile-node aix-mobile-node-decision" data-flow-node="decision"><span class="aix-mobile-node-top"><b>03 / ROUTER</b><i>DECIDE</i></span><strong>Route the outcome</strong><small>Permissioned decision path</small></article>
+          <div class="aix-mobile-branches">
+            <article class="aix-mobile-node aix-mobile-branch" data-flow-node="success"><span class="aix-mobile-branch-link" data-flow-link="decision-success"><i></i></span><span class="aix-mobile-node-top"><b>04 / TRUE</b><i>SUCCESS</i></span><strong>Add to channel</strong><small>Action completed</small></article>
+            <article class="aix-mobile-node aix-mobile-branch" data-flow-node="fallback"><span class="aix-mobile-branch-link" data-flow-link="decision-fallback"><i></i></span><span class="aix-mobile-node-top"><b>05 / FALSE</b><i>FALLBACK</i></span><strong>Update profile</strong><small>Safe alternate route</small></article>
+          </div>
+          <div class="aix-mobile-resources">
+            <article class="aix-mobile-resource" data-flow-node="model"><span class="aix-mobile-resource-link" data-flow-link="agent-model"><i></i></span><b>AI</b><strong>Chat model</strong><small>Reasoning layer</small></article>
+            <article class="aix-mobile-resource" data-flow-node="memory"><span class="aix-mobile-resource-link" data-flow-link="agent-memory"><i></i></span><b>◌</b><strong>Memory</strong><small>Conversation state</small></article>
+            <article class="aix-mobile-resource" data-flow-node="tools"><span class="aix-mobile-resource-link" data-flow-link="agent-tools"><i></i></span><b>▤</b><strong>Tools</strong><small>Business systems</small></article>
+            <article class="aix-mobile-resource" data-flow-node="knowledge"><span class="aix-mobile-resource-link" data-flow-link="agent-knowledge"><i></i></span><b>≡</b><strong>Knowledge</strong><small>Grounded context</small></article>
+          </div>
+        </div>
+        <div class="aix-workflow-caption"><span class="aix-workflow-caption-line"></span><span>Every action is traceable, permissioned and ready for human review.</span></div>
+      </div>
     </div>
   </div>
 </section>

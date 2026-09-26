@@ -10647,3 +10647,453 @@ html.theme-combined, html.theme-combined body { background:#ffffff; color:#16211
 @media (max-width:620px) {
   .page-ai-redesign #navbar .nav-cta { color:#fff !important; background:transparent !important; }
 }
+
+/* =====================================================================
+   AGENTIC AI — EXECUTION GRAPH MODEL
+   A compact, n8n-inspired workflow visualization for the agent process.
+   ===================================================================== */
+.aix-workflow-section {
+  background:
+    radial-gradient(circle at 50% 34%, rgba(44, 129, 235, .14), transparent 36%),
+    linear-gradient(180deg, #04101d 0%, #020711 100%);
+}
+.aix-workflow-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+  gap: 72px;
+  align-items: end;
+  max-width: 1120px;
+  margin: 0 auto 48px;
+}
+.aix-workflow-head h2 {
+  margin-bottom: 0;
+  font: 800 clamp(42px, 5.3vw, 72px)/.98 var(--font-display);
+  letter-spacing: -.045em;
+}
+.aix-workflow-head > p {
+  max-width: 500px;
+  margin: 0 0 2px;
+  color: var(--aix-muted);
+  font-size: 17px;
+  line-height: 1.7;
+}
+.aix-workflow-shell {
+  position: relative;
+  max-width: 1080px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(91, 214, 255, .22);
+  border-radius: 22px;
+  background: rgba(3, 11, 21, .92);
+  box-shadow: 0 30px 80px rgba(0, 5, 14, .42), 0 0 0 1px rgba(255, 255, 255, .025) inset;
+}
+.aix-workflow-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(87, 222, 255, .06), transparent 34%, rgba(46, 230, 184, .04));
+}
+.aix-workflow-toolbar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 58px;
+  padding: 0 22px;
+  border-bottom: 1px solid rgba(91, 214, 255, .16);
+  background: rgba(5, 17, 29, .82);
+  color: #829aab;
+  font-size: 10px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.aix-workflow-toolbar-title,
+.aix-workflow-toolbar-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.aix-workflow-toolbar-title strong {
+  color: #d9f4ff;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  text-transform: none;
+}
+.aix-workflow-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #43e4bd;
+  box-shadow: 0 0 0 4px rgba(67, 228, 189, .1), 0 0 15px #43e4bd;
+  animation: aixWorkflowPulse 1.7s ease-in-out infinite;
+}
+.aix-workflow-run-status {
+  color: #72f0c1;
+  font-weight: 500;
+}
+.aix-workflow-canvas {
+  position: relative;
+  min-height: 550px;
+  overflow: hidden;
+}
+.aix-workflow-grid {
+  position: absolute;
+  inset: 0;
+  opacity: .4;
+  background-image: radial-gradient(circle, rgba(145, 190, 215, .38) 1px, transparent 1px);
+  background-size: 25px 25px;
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent), linear-gradient(180deg, transparent, #000 8%, #000 91%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+.aix-workflow-canvas::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(2, 7, 17, .92), transparent 13%, transparent 87%, rgba(2, 7, 17, .92));
+}
+.aix-workflow-svg {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 550px;
+}
+.aix-flow-base,
+.aix-flow-active,
+.aix-flow-aux-base,
+.aix-flow-aux-active {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.aix-flow-base {
+  stroke: rgba(91, 121, 143, .45);
+  stroke-width: 2;
+}
+.aix-flow-active {
+  stroke: url(#aix-flow-green);
+  stroke-width: 2.6;
+  stroke-dasharray: 2 12;
+  stroke-dashoffset: 0;
+  opacity: 0;
+  filter: url(#aix-flow-glow);
+  transition: opacity .25s ease;
+  animation: aixWorkflowDash .7s linear infinite;
+}
+.aix-flow-aux-base {
+  stroke: rgba(89, 117, 137, .34);
+  stroke-width: 1.7;
+  stroke-dasharray: 3 8;
+}
+.aix-flow-aux-active {
+  stroke: #5fe6c2;
+  stroke-width: 2;
+  stroke-dasharray: 3 10;
+  stroke-dashoffset: 0;
+  opacity: 0;
+  filter: url(#aix-flow-glow);
+  transition: opacity .25s ease;
+  animation: aixWorkflowDash .85s linear infinite;
+}
+.aix-flow-active.is-live,
+.aix-flow-aux-active.is-live {
+  opacity: 1;
+}
+.aix-workflow-node {
+  outline: none;
+  cursor: default;
+}
+.aix-workflow-node > rect,
+.aix-workflow-resource > circle:first-child {
+  fill: rgba(6, 18, 31, .96);
+  stroke: rgba(114, 151, 174, .43);
+  stroke-width: 1.4;
+  transition: fill .35s ease, stroke .35s ease, filter .35s ease;
+}
+.aix-workflow-node-agent > rect {
+  fill: rgba(8, 25, 43, .98);
+}
+.aix-workflow-node.is-active > rect,
+.aix-workflow-node.is-complete > rect,
+.aix-workflow-resource.is-active > circle:first-child,
+.aix-workflow-resource.is-complete > circle:first-child {
+  fill: rgba(8, 38, 42, .98);
+  stroke: #54e9bd;
+  filter: drop-shadow(0 0 10px rgba(65, 232, 184, .2));
+}
+.aix-workflow-node.is-active > rect,
+.aix-workflow-resource.is-active > circle:first-child {
+  animation: aixWorkflowNodeGlow 1.5s ease-in-out infinite;
+}
+.aix-workflow-node:hover > rect,
+.aix-workflow-node:focus-visible > rect,
+.aix-workflow-resource:hover > circle:first-child,
+.aix-workflow-resource:focus-visible > circle:first-child {
+  stroke: #66ddff;
+  filter: drop-shadow(0 0 14px rgba(89, 220, 255, .3));
+}
+.aix-node-icon-bg {
+  fill: rgba(82, 218, 255, .12);
+  stroke: rgba(82, 218, 255, .45);
+  stroke-width: 1;
+  transition: fill .35s ease, stroke .35s ease;
+}
+.aix-workflow-node.is-active .aix-node-icon-bg,
+.aix-workflow-node.is-complete .aix-node-icon-bg {
+  fill: rgba(67, 228, 189, .16);
+  stroke: rgba(94, 239, 190, .7);
+}
+.aix-node-icon,
+.aix-node-port {
+  fill: none;
+  stroke: #66ddff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+  transition: fill .35s ease, stroke .35s ease;
+}
+.aix-node-port {
+  fill: #071421;
+  stroke: #638196;
+  stroke-width: 1.5;
+}
+.aix-workflow-node.is-active .aix-node-port,
+.aix-workflow-node.is-complete .aix-node-port {
+  fill: #53e9bc;
+  stroke: #a0ffda;
+  filter: drop-shadow(0 0 6px rgba(83, 233, 188, .7));
+}
+.aix-node-index,
+.aix-node-branch {
+  fill: #6f8798;
+  font: 400 8px/1.15 var(--font-body);
+  letter-spacing: .06em;
+}
+.aix-node-title {
+  fill: #f5fbff;
+  font: 500 15px/1.2 var(--font-body);
+  letter-spacing: -.005em;
+}
+.aix-node-subtitle {
+  fill: #8da6b6;
+  font: 400 11px/1.25 var(--font-body);
+}
+.aix-node-divider {
+  stroke: rgba(108, 153, 177, .2);
+  stroke-width: 1;
+}
+.aix-node-meta {
+  fill: #5e7b8e;
+  font: 400 8px/1.15 var(--font-body);
+  letter-spacing: .1em;
+}
+.aix-node-branch {
+  font-size: 7px;
+  font-weight: 400;
+  letter-spacing: .06em;
+}
+.aix-node-branch-true { fill: #73edc0; }
+.aix-node-branch-false { fill: #879aa7; }
+.aix-resource-core {
+  fill: rgba(9, 35, 52, .9);
+  stroke: rgba(91, 218, 255, .34);
+  stroke-width: 1;
+  transition: fill .35s ease, stroke .35s ease;
+}
+.aix-workflow-resource.is-active .aix-resource-core,
+.aix-workflow-resource.is-complete .aix-resource-core {
+  fill: rgba(8, 60, 52, .92);
+  stroke: #57e5bd;
+}
+.aix-resource-glyph {
+  fill: #67ddff;
+  font: 400 12px/1 var(--font-body);
+}
+.aix-workflow-resource.is-active .aix-resource-glyph,
+.aix-workflow-resource.is-complete .aix-resource-glyph {
+  fill: #7af1c4;
+}
+.aix-resource-label {
+  fill: #b9ced8;
+  font: 500 11px/1.2 var(--font-body);
+  letter-spacing: 0;
+}
+.aix-resource-subtitle {
+  fill: #6e8798;
+  font: 400 9px/1.2 var(--font-body);
+}
+.aix-workflow-caption {
+  position: absolute;
+  z-index: 2;
+  right: 24px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6e8798;
+  font-size: 10px;
+  letter-spacing: .02em;
+}
+.aix-workflow-caption-line {
+  width: 20px;
+  height: 1px;
+  background: #4fe0b5;
+  box-shadow: 0 0 9px rgba(79, 224, 181, .6);
+}
+@keyframes aixWorkflowDash {
+  to { stroke-dashoffset: -24; }
+}
+@keyframes aixWorkflowPulse {
+  0%, 100% { opacity: .65; transform: scale(.82); }
+  50% { opacity: 1; transform: scale(1.18); }
+}
+@keyframes aixWorkflowNodeGlow {
+  0%, 100% { filter: drop-shadow(0 0 5px rgba(83, 233, 188, .18)); }
+  50% { filter: drop-shadow(0 0 15px rgba(83, 233, 188, .38)); }
+}
+@media (max-width: 900px) {
+  .aix-workflow-head { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .aix-workflow-canvas { min-height: 470px; }
+  .aix-workflow-svg { min-height: 470px; }
+  .aix-workflow-caption { right: 16px; left: 16px; justify-content: center; text-align: center; }
+}
+@media (max-width: 620px) {
+  .aix-workflow-head { margin-bottom: 34px; }
+  .aix-workflow-head h2 { font-size: clamp(38px, 11.5vw, 52px); }
+  .aix-workflow-head > p { font-size: 16px; }
+  .aix-workflow-shell { border-radius: 18px; }
+  .aix-workflow-toolbar { min-height: 52px; padding: 0 14px; }
+  .aix-workflow-toolbar-meta { gap: 0; }
+  .aix-workflow-toolbar-meta > span:last-child { display: none; }
+  .aix-workflow-toolbar-title > span:last-child { display: none; }
+  .aix-workflow-canvas { min-height: 430px; }
+  .aix-workflow-svg { min-height: 430px; transform: scale(1.2); transform-origin: center 44%; }
+  .aix-workflow-caption { bottom: 11px; font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aix-workflow-live-dot,
+  .aix-workflow-node.is-active > rect,
+  .aix-workflow-resource.is-active > circle:first-child,
+  .aix-flow-active,
+  .aix-flow-aux-active { animation: none; }
+}
+
+/* Compact vertical graph for narrow screens; the full SVG remains the desktop view. */
+.aix-workflow-mobile { display: none; }
+@media (max-width: 620px) {
+  .aix-workflow-canvas { min-height: 0; padding: 18px 14px 54px; }
+  .aix-workflow-svg { display: none; }
+  .aix-workflow-mobile {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .aix-mobile-row { display: grid; grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr); gap: 6px; align-items: center; }
+  .aix-mobile-node {
+    position: relative;
+    min-width: 0;
+    min-height: 76px;
+    padding: 12px;
+    border: 1px solid rgba(114, 151, 174, .43);
+    border-radius: 11px;
+    background: rgba(6, 18, 31, .96);
+    transition: border-color .35s ease, background .35s ease, box-shadow .35s ease;
+  }
+  .aix-mobile-node.is-active,
+  .aix-mobile-node.is-complete {
+    border-color: #54e9bd;
+    background: rgba(8, 38, 42, .98);
+    box-shadow: 0 0 18px rgba(65, 232, 184, .2);
+  }
+  .aix-mobile-node.is-active { animation: aixWorkflowNodeGlow 1.5s ease-in-out infinite; }
+  .aix-mobile-node-top { display: flex; justify-content: space-between; align-items: center; gap: 5px; margin-bottom: 9px; }
+  .aix-mobile-node-top b { color: #6f8798; font: 400 8px/1.15 var(--font-body); letter-spacing: .06em; white-space: nowrap; }
+  .aix-mobile-node-top i { color: #62e9bf; font: 400 7px/1.15 var(--font-body); font-style: normal; letter-spacing: .06em; }
+  .aix-mobile-node strong { display: block; overflow: hidden; color: #f5fbff; font: 500 13px/1.2 var(--font-body); text-overflow: ellipsis; white-space: nowrap; }
+  .aix-mobile-node small { display: block; overflow: hidden; margin-top: 5px; color: #a9bfcb; font-size: 9px; line-height: 1.25; font-weight: 400; text-overflow: ellipsis; white-space: nowrap; }
+  .aix-mobile-flow { position: relative; height: 2px; overflow: hidden; background: rgba(89, 117, 137, .42); }
+  .aix-mobile-flow::after,
+  .aix-mobile-branch-link::after,
+  .aix-mobile-resource-link::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, #5fe6c2 0 3px, transparent 3px 10px); opacity: 0; transition: opacity .25s ease; }
+  .aix-mobile-flow.is-live::after,
+  .aix-mobile-branch-link.is-live::after,
+  .aix-mobile-resource-link.is-live::after { opacity: 1; animation: aixWorkflowDashMobile .7s linear infinite; }
+  .aix-mobile-flow-vertical { width: 2px; height: 14px; align-self: center; background: rgba(89, 117, 137, .42); }
+  .aix-mobile-flow-vertical::after { background: repeating-linear-gradient(180deg, #5fe6c2 0 3px, transparent 3px 10px); }
+  .aix-mobile-node-decision { width: min(100%, 250px); align-self: center; text-align: center; }
+  .aix-mobile-node-decision .aix-mobile-node-top { justify-content: center; }
+  .aix-mobile-branches { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-top: 18px; }
+  .aix-mobile-branches::before { content: ""; position: absolute; top: 0; left: 25%; right: 25%; height: 1px; background: rgba(89, 117, 137, .42); }
+  .aix-mobile-branch-link { position: absolute; top: -18px; left: calc(50% - 1px); width: 2px; height: 18px; overflow: hidden; background: rgba(89, 117, 137, .42); }
+  .aix-mobile-branch-link::after,
+  .aix-mobile-resource-link::after { background: repeating-linear-gradient(180deg, #5fe6c2 0 3px, transparent 3px 10px); }
+  .aix-mobile-resources { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding-top: 28px; }
+  .aix-mobile-resources::before { content: ""; position: absolute; top: 10px; left: 12%; right: 12%; height: 1px; background: rgba(89, 117, 137, .32); }
+  .aix-mobile-resource { position: relative; min-width: 0; padding: 15px 5px 8px; text-align: center; border: 1px solid rgba(89, 131, 154, .38); border-radius: 10px; background: rgba(5, 20, 32, .86); transition: border-color .35s ease, background .35s ease, box-shadow .35s ease; }
+  .aix-mobile-resource.is-active,
+  .aix-mobile-resource.is-complete { border-color: #54e9bd; background: rgba(8, 38, 42, .98); box-shadow: 0 0 14px rgba(65, 232, 184, .16); }
+  .aix-mobile-resource b { display: grid; place-items: center; width: 27px; height: 27px; margin: -29px auto 7px; border: 1px solid rgba(91, 218, 255, .42); border-radius: 50%; color: #67ddff; background: #082334; font: 400 9px/1 var(--font-body); }
+  .aix-mobile-resource.is-active b,
+  .aix-mobile-resource.is-complete b { border-color: #57e5bd; color: #7af1c4; background: #083c34; }
+  .aix-mobile-resource strong { display: block; overflow: hidden; color: #c1d2dc; font-size: 9px; line-height: 1.25; font-weight: 400; text-overflow: ellipsis; white-space: nowrap; }
+  .aix-mobile-resource small { display: block; overflow: hidden; margin-top: 4px; color: #7891a1; font-size: 7px; line-height: 1.25; font-weight: 400; text-overflow: ellipsis; white-space: nowrap; }
+  .aix-mobile-resource-link { position: absolute; top: -19px; left: calc(50% - 1px); width: 2px; height: 19px; overflow: hidden; background: rgba(89, 117, 137, .32); }
+  .aix-workflow-caption { bottom: 12px; }
+}
+@keyframes aixWorkflowDashMobile { to { background-position: 0 12px; } }
+
+/* Use regular UI text inside the workflow model. */
+.aix-workflow-shell strong,
+.aix-workflow-shell b { font-weight: 500; }
+.aix-workflow-shell .aix-mobile-node-top b,
+.aix-workflow-shell .aix-mobile-node-top i { font-weight: 400; }
+
+/* Final workflow text reset: clean regular UI typography, never heavy. */
+.aix-workflow-shell svg text,
+.aix-workflow-shell .aix-workflow-toolbar,
+.aix-workflow-shell .aix-workflow-toolbar strong,
+.aix-workflow-shell .aix-workflow-run-status,
+.aix-workflow-shell .aix-mobile-node,
+.aix-workflow-shell .aix-mobile-node strong,
+.aix-workflow-shell .aix-mobile-node b,
+.aix-workflow-shell .aix-mobile-node i,
+.aix-workflow-shell .aix-mobile-node small,
+.aix-workflow-shell .aix-mobile-resource,
+.aix-workflow-shell .aix-mobile-resource b,
+.aix-workflow-shell .aix-mobile-resource strong,
+.aix-workflow-shell .aix-mobile-resource small {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+}
+.aix-workflow-shell .aix-node-title,
+.aix-workflow-shell .aix-resource-label {
+  font-weight: 400;
+}
+
+/* Workflow node labels only: regular, readable text. */
+.aix-workflow-shell .aix-node-index,
+.aix-workflow-shell .aix-node-title,
+.aix-workflow-shell .aix-node-subtitle,
+.aix-workflow-shell .aix-node-meta,
+.aix-workflow-shell .aix-node-branch,
+.aix-workflow-shell .aix-resource-glyph,
+.aix-workflow-shell .aix-resource-label,
+.aix-workflow-shell .aix-resource-subtitle,
+.aix-workflow-shell .aix-mobile-node-top b,
+.aix-workflow-shell .aix-mobile-node-top i,
+.aix-workflow-shell .aix-mobile-node strong,
+.aix-workflow-shell .aix-mobile-node small,
+.aix-workflow-shell .aix-mobile-resource b,
+.aix-workflow-shell .aix-mobile-resource strong,
+.aix-workflow-shell .aix-mobile-resource small {
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: 400 !important;
+}
