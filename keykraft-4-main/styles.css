@@ -10637,13 +10637,13 @@ html.theme-combined, html.theme-combined body { background:#ffffff; color:#16211
 .page-ai-redesign #navbar .nav-cta:hover {
   background:linear-gradient(105deg,#8aeaff,#739cff 58%,#51ebc8) !important;
 }
-.page-ai-redesign .footer-cta-btn {
+/* .page-ai-redesign .footer-cta-btn {
   color:#02101a;
   background:linear-gradient(105deg,#69e4ff,#5a89ff 58%,#35e5bc);
 }
 .page-ai-redesign .footer-cta-btn:hover {
   box-shadow:0 16px 34px -14px rgba(83,220,255,.45);
-}
+} */
 @media (max-width:620px) {
   .page-ai-redesign #navbar .nav-cta { color:#fff !important; background:transparent !important; }
 }
