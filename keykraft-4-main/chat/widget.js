@@ -44,27 +44,19 @@ customElements.define('kk-chat', class extends HTMLElement {
 .wrap{position:fixed;${pos}:${off};bottom:24px;z-index:2147483001;display:flex;flex-direction:column;align-items:${pos === 'left' ? 'flex-start' : 'flex-end'};gap:14px;pointer-events:none;}
 .wrap>*{pointer-events:auto;}
 .launcher{position:relative;display:flex;align-items:center;gap:12px;flex-direction:${pos === 'left' ? 'row' : 'row-reverse'};}
-.fab{position:relative;width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;background:var(--grad);color:var(--on-accent);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(118,185,0,.35),0 0 0 1px rgba(255,255,255,.12) inset;transition:transform .25s cubic-bezier(.3,1.4,.5,1);}
-.fab:hover{transform:scale(1.08) rotate(-4deg);}
-.fab:active{transform:scale(.95);}
-.fab::before{content:"";position:absolute;inset:0;border-radius:50%;background:var(--grad);opacity:.55;z-index:-1;animation:pulse 2.4s ease-out infinite;}
-@keyframes pulse{0%{transform:scale(1);opacity:.55;}100%{transform:scale(1.7);opacity:0;}}
+.fab{position:relative;width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;background:var(--grad);color:var(--on-accent);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(118,185,0,.35),0 0 0 1px rgba(255,255,255,.12) inset;}
 .fab svg{width:28px;height:28px;position:absolute;transition:transform .3s,opacity .25s;}
 .fab .i-close{opacity:0;transform:rotate(-90deg) scale(.5);}
 .open .fab .i-chat{opacity:0;transform:rotate(90deg) scale(.5);}
 .open .fab .i-close{opacity:1;transform:none;}
-.open .fab::before{animation:none;opacity:0;}
-.badge{position:absolute;top:2px;${pos}:2px;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #000;}
-.hint{background:rgba(13,13,13,.95);color:var(--text);padding:10px 16px;border-radius:14px;font-size:14px;font-weight:500;border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.4);cursor:pointer;white-space:nowrap;animation:pop .5s .6s both cubic-bezier(.3,1.4,.5,1);backdrop-filter:blur(10px);}
-.open .hint{display:none;}
 @keyframes pop{from{opacity:0;transform:translateY(8px) scale(.9);}to{opacity:1;transform:none;}}
 .panel{width:380px;max-width:calc(100vw - 32px);height:600px;max-height:calc(100vh - 130px);display:none;flex-direction:column;overflow:hidden;border-radius:${C.borderRadius || '22px'};background:var(--panel);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.6),0 0 60px rgba(118,185,0,.12);transform-origin:bottom ${pos};}
 .open .panel{display:flex;animation:openP .35s cubic-bezier(.2,1.1,.3,1);}
 @keyframes openP{from{opacity:0;transform:translateY(20px) scale(.92);}to{opacity:1;transform:none;}}
 .head{position:relative;display:flex;align-items:center;gap:12px;padding:16px 18px;background:var(--surface);color:var(--text);border-bottom:1px solid var(--line);overflow:hidden;}
 .head::after{content:"";position:absolute;width:180px;height:180px;right:-50px;top:-90px;border-radius:50%;background:rgba(118,185,0,.12);}
-.avatar{position:relative;width:42px;height:42px;border-radius:50%;background:#000;color:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1.5px solid var(--accent);}
-.avatar svg{width:22px;height:22px;}
+.avatar{position:relative;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;}
 .avatar i{position:absolute;right:-1px;bottom:-1px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);}
 .hinfo{flex:1;min-width:0;position:relative;z-index:1;}
 .hinfo b{display:block;font-size:16px;font-weight:600;}
@@ -76,7 +68,7 @@ customElements.define('kk-chat', class extends HTMLElement {
 .msgs::-webkit-scrollbar{width:6px;}.msgs::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:6px;}
 .welcome{text-align:center;padding:18px 8px 6px;animation:pop .5s both;}
 .welcome .wav{width:60px;height:60px;margin:0 auto 12px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(118,185,0,.3);}
-.welcome .wav svg{width:30px;height:30px;color:var(--on-accent);}
+.welcome .wav img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;}
 .welcome h3{color:var(--text);font-size:18px;font-weight:600;margin-bottom:6px;}
 .welcome p{color:var(--muted);font-size:13px;}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
@@ -115,13 +107,13 @@ textarea::placeholder{color:var(--muted);}
 <div class="wrap" id="wrap">
   <div class="panel" id="panel" role="dialog" aria-label="${esc(T.title)}">
     <div class="head">
-      <div class="avatar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.9 14.5L2 22l5.7-1.5A10 10 0 1 0 12 2Zm-3 11a1.3 1.3 0 1 1 0-2.6A1.3 1.3 0 0 1 9 13Zm3 0a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6Zm3 0a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6Z"/></svg><i></i></div>
+      <div class="avatar"><img src="assets/logo.png" alt="Keykraft"><i></i></div>
       <div class="hinfo"><b>${esc(T.title)}</b><span>${esc(T.status)}</span></div>
       <button class="xbtn" id="min" aria-label="Close chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
     </div>
     <div class="msgs" id="msgs" aria-live="polite">
       <div class="welcome" id="welcome">
-        <div class="wav"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 4.5A1.5 1.5 0 0 0 3 6v9a1.5 1.5 0 0 0 1.5 1.5h1.75l-.19 2.28a.5.5 0 0 0 .82.43L10.5 16.5H19.5A1.5 1.5 0 0 0 21 15V6a1.5 1.5 0 0 0-1.5-1.5h-15Z"/></svg></div>
+        <div class="wav"><img src="assets/logo.png" alt="Keykraft"></div>
         <h3>${esc(T.greeting)}</h3>
         <p>${esc(T.sub)}</p>
         <div class="chips" id="chips"></div>
@@ -139,9 +131,7 @@ textarea::placeholder{color:var(--muted);}
     <button class="fab" id="fab" aria-label="Open chat" aria-expanded="false">
       <svg class="i-chat" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 4.5A1.5 1.5 0 0 0 3 6v9a1.5 1.5 0 0 0 1.5 1.5h1.75l-.19 2.28a.5.5 0 0 0 .82.43L10.5 16.5H19.5A1.5 1.5 0 0 0 21 15V6a1.5 1.5 0 0 0-1.5-1.5h-15Z"/></svg>
       <svg class="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-      <span class="badge"></span>
     </button>
-    <div class="hint" id="hint">${esc(T.label)}</div>
   </div>
 </div>`;
 
@@ -157,7 +147,6 @@ textarea::placeholder{color:var(--muted);}
       if (o) setTimeout(function () { inp.focus(); toBottom(); }, 250);
     }
     $('fab').onclick = function () { setOpen(!wrap.classList.contains('open')); };
-    $('hint').onclick = function () { setOpen(true); };
     $('min').onclick = function () { setOpen(false); };
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
 
