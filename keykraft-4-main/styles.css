@@ -11432,3 +11432,169 @@ html.theme-combined, html.theme-combined body { background:#ffffff; color:#16211
 .page-it-redesign .itx-engagement-grid li::before { border-color: #76b900 !important; }
 .page-it-redesign .itx-cta { background: radial-gradient(circle at 50% 68%, rgba(118, 185, 0, .22), transparent 38%), linear-gradient(180deg, #0d0d0d, #000) !important; }
 .page-it-redesign .itx-cta-grid { background: linear-gradient(rgba(182, 255, 58, .08) 1px, transparent 1px), linear-gradient(90deg, rgba(182, 255, 58, .08) 1px, transparent 1px) !important; }
+
+
+/* =====================================================================
+   MOBILE / RESPONSIVE FIXES
+   Keep this block at the END of styles.css so it wins over earlier rules
+   of the same specificity (several base rules further up were defined
+   AFTER their media queries and were overriding the mobile layouts).
+   Breakpoints: 1024px (tablet landscape) / 760px (tablet portrait) /
+                480px (phones) / 380px (small phones)
+   ===================================================================== */
+
+/* ---- Safety nets ---- */
+img,
+video,
+iframe {
+  max-width: 100%;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+li,
+a {
+  overflow-wrap: break-word;
+}
+
+/* ---- Service pages: "Related services" cards ---- */
+.sd-related-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.sd-related-card,
+.sd-related-txt {
+  min-width: 0;
+}
+
+@media (max-width: 1024px) {
+  .sd-related-grid {
+    gap: 16px;
+    padding: 0 24px;
+  }
+}
+@media (max-width: 760px) {
+  .sd-related-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    padding: 0 20px;
+  }
+  .sd-related-card {
+    padding: 20px;
+    gap: 14px;
+  }
+  .sd-related-ic {
+    width: 44px;
+    height: 44px;
+  }
+  .sd-related-card .sd-related-ic svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* ---- Medical billing: orbit nodes + process steps ---- */
+.mp-process {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 1024px) {
+  .mp-process {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .mp-process {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+  .mp-orbit {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mp-node {
+    min-width: 0;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  .mp-node-dot {
+    width: 34px;
+    height: 34px;
+    flex: none;
+  }
+  .mp-node-dot svg {
+    width: 17px;
+    height: 17px;
+  }
+  .mp-node-lbl {
+    min-width: 0;
+    font-size: 12px;
+  }
+}
+@media (max-width: 380px) {
+  .mp-orbit {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---- Service pages: restore side padding lost to later padding shorthands ---- */
+.sd-body,
+.sd-faq-sec,
+.sd-related {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+.sd-related-grid {
+  padding-left: 0;
+  padding-right: 0;
+}
+@media (max-width: 760px) {
+  .sd-body,
+  .sd-faq-sec,
+  .sd-related {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .sd-body {
+    padding-top: 44px;
+    padding-bottom: 44px;
+  }
+  .sd-faq-sec {
+    padding-top: 44px;
+    padding-bottom: 44px;
+  }
+  .sd-title {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* ---- Phones: form fields (16px stops iOS zoom-on-focus), tap targets ---- */
+@media (max-width: 760px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+  .sd-title {
+    margin-bottom: 10px;
+  }
+  .faq-q,
+  .sm-toggle,
+  .btn,
+  .mag-btn {
+    min-height: 44px;
+  }
+}
+
+/* ---- Small phones ---- */
+@media (max-width: 380px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .sd-body,
+  .sd-faq-sec,
+  .sd-related {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
