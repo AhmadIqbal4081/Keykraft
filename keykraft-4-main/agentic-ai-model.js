@@ -1,26 +1,58 @@
-/* Keep the supplied Spline robot while removing scene-only presentation layers. */
+/* Agentic AI page: hero mascot + workflow animation (Spline removed). */
 (function () {
   'use strict';
 
-  function cleanModel(viewer) {
-    var app = viewer && viewer._spline;
-    if (!app) return false;
+  /* Hero mascot: same bot as the chat support, eyes follow the mouse, blinks, scans when idle. */
+  function mascot() {
+    var root = document.querySelector('[data-mascot]');
+    if (!root) return;
+    var svg = root.querySelector('svg'),
+        eyes = root.querySelector('.bot__eyes'),
+        blink = root.querySelector('.bot__blink');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var REST = { x: 0.5, y: -0.42 }, R = 20;
+    var cur = { x: REST.x, y: REST.y }, mouse = null, running = false, visible = true;
+    var blinkStart = -1, blinkAt = performance.now() + 2500;
+    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 
-    var cleaned = false;
-    ['Button', 'Plane'].forEach(function (name) {
-      try {
-        var object = app.findObjectByName(name);
-        if (object) {
-          object.visible = false;
-          cleaned = true;
+    function aim() {
+      if (!mouse) return REST;
+      var r = svg.getBoundingClientRect();
+      if (!r.width) return REST;
+      var dx = mouse.x - (r.left + r.width / 2), dy = mouse.y - (r.top + r.height / 2);
+      var d = Math.hypot(dx, dy) || 1, k = clamp(d / 120, 0, 1);
+      return { x: dx / d * k, y: dy / d * k };
+    }
+
+    function loop(now) {
+      if (!visible) { running = false; return; }
+      var t = aim(), f = reduce ? 1 : 0.085;
+      cur.x += (t.x - cur.x) * f;
+      cur.y += (t.y - cur.y) * f;
+      var b = 1;
+      if (!reduce) {
+        if (blinkStart < 0 && now >= blinkAt) blinkStart = now;
+        if (blinkStart >= 0) {
+          var p = (now - blinkStart) / 170;
+          if (p >= 1) { blinkStart = -1; blinkAt = now + 2200 + Math.random() * 3500; }
+          else b = 1 - Math.sin(p * Math.PI) * 0.9;
         }
-      } catch (_) {}
-    });
+      }
+      /* axis-aligned squash only (no rotate/skew) so the eyes always stay upright */
+      eyes.setAttribute('transform', 'translate(' + (50 + cur.x * R) + ' ' + (50 + cur.y * R) + ') scale(' + (1.2 * (1 - 0.25 * Math.abs(cur.x))) + ' ' + (1.2 * (1 - 0.12 * Math.abs(cur.y))) + ')');
+      blink.setAttribute('transform', 'scale(1 ' + b + ')');
+      var m = svg.getBoundingClientRect().width / 48 * 1.5; /* body leans toward the cursor like the chat bot */
+      svg.style.transform = 'translate(' + (cur.x * m).toFixed(2) + 'px,' + (cur.y * m).toFixed(2) + 'px)';
+      requestAnimationFrame(loop);
+    }
+    function start() { if (!running) { running = true; requestAnimationFrame(loop); } }
 
-    try { app.setBackgroundColor('rgba(0,0,0,0)'); } catch (_) {}
-    try { app._scene.background = null; } catch (_) {}
-    try { app.requestRender(); } catch (_) {}
-    return cleaned;
+    window.addEventListener('pointermove', function (e) { mouse = { x: e.clientX, y: e.clientY }; }, { passive: true });
+    document.addEventListener('mouseleave', function () { mouse = null; });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible) start(); }).observe(root);
+    }
+    start();
   }
 
   function workflowAnimation() {
@@ -73,18 +105,7 @@
 
   function init() {
     workflowAnimation();
-    var viewer = document.querySelector('.aix-spline');
-    if (!viewer) return;
-
-    viewer.addEventListener('load', function () {
-      window.setTimeout(function () { cleanModel(viewer); }, 50);
-    });
-
-    var attempts = 0;
-    var timer = window.setInterval(function () {
-      attempts += 1;
-      if (cleanModel(viewer) || attempts >= 80) window.clearInterval(timer);
-    }, 250);
+    mascot();
   }
 
   if (document.readyState === 'loading') {

@@ -87,7 +87,37 @@
                 oversight</span><span><i></i> Grounded knowledge</span><span><i></i> Production ready</span></div>
           </div>
           <div class="aix-model-stage reveal-r in">
-            <spline-viewer url="https://prod.spline.design/PbPWl13GQvtBOA-L/scene.splinecode"></spline-viewer>
+            <style>
+              .aix-model-stage{overflow:visible !important;border:0;outline:0}
+              .aix-mascot{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+              .aix-mascot-in{position:relative;width:min(100%,420px);aspect-ratio:1;transform:translateX(12%)}
+              .aix-mascot-in::after{content:"";position:absolute;left:14%;top:100%;width:72%;height:9%;margin-top:3%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(0,0,0,.55),rgba(118,185,0,.12) 55%,transparent 72%)}
+              .aix-page .aix-mascot svg{fill:none;stroke:none !important;stroke-width:0}
+              .aix-mascot svg *{stroke:none !important}
+              .aix-mascot svg{display:block;width:100%;height:100%;overflow:visible;border:0;outline:0;will-change:transform}
+              @media (max-width:900px){.aix-mascot-in{transform:none}}
+            </style>
+            <div class="aix-mascot" data-mascot aria-hidden="true"><div class="aix-mascot-in">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <clipPath id="aixbotclip"><circle cx="50" cy="50" r="50"/></clipPath>
+                  <radialGradient id="aixBall" cx="34%" cy="28%" r="85%"><stop offset="0" stop-color="#c8f550"/><stop offset=".38" stop-color="#8fd10a"/><stop offset=".72" stop-color="#5a9100"/><stop offset="1" stop-color="#2c4c00"/></radialGradient>
+                  <radialGradient id="aixBounce" cx="62%" cy="96%" r="50%"><stop offset="0" stop-color="#b6ff3a" stop-opacity=".45"/><stop offset="1" stop-color="#b6ff3a" stop-opacity="0"/></radialGradient>
+                  <radialGradient id="aixGloss" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+                  <radialGradient id="aixShade" cx="40%" cy="35%" r="75%"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".38"/></radialGradient>
+                </defs>
+                <circle cx="50" cy="50" r="50" fill="url(#aixBall)"/>
+                <g clip-path="url(#aixbotclip)">
+                  <circle cx="50" cy="50" r="50" fill="url(#aixBounce)"/>
+                  <circle cx="50" cy="50" r="50" fill="url(#aixShade)"/>
+                  <g class="bot__eyes" transform="translate(70 29)"><g class="bot__blink">
+                    <rect x="-15" y="-9" width="10" height="18" rx="5" fill="#fff"/>
+                    <rect x="5" y="-9" width="10" height="18" rx="5" fill="#fff"/>
+                  </g></g>
+                  <ellipse cx="30" cy="20" rx="17" ry="10" fill="url(#aixGloss)" transform="rotate(-35 30 20)"/>
+                </g>
+              </svg>
+            </div></div>
           </div>
         </div>
         <div class="aix-ribbon logoloop logoloop--scale-hover" data-logoloop data-speed="48"
@@ -658,7 +688,6 @@
     </footer>
     <script src="app.js" defer></script>
   </div>
-  <script type="module" src="https://cdn.spline.design/@splinetool/viewer@2.0.58/build/spline-viewer.js"></script>
   <script src="agentic-ai-model.js" defer></script>
     <!-- Keykraft Chat Assistant (edit answers in chat/knowledge.js; bump ?v= after editing) -->
     <script src="chat/knowledge.js?v=2"></script>
